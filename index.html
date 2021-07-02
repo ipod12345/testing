@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>문제해결과 컴퓨팅 과제</title>
+		<link rel="stylesheet" href="../static/assets/css/main.css">
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<h1>문제해결과 컴퓨팅 과제</h1>
+				<nav>
+					<ul>
+						<li><a href="#diary">소개</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Intro -->
+			<section id="intro" class="main style1 dark fullscreen">
+				<div class="content">
+					<header>
+						<h2>문제 해결과 컴퓨팅 과제<br/></h2>
+					</header>
+					<p>2017112899 <strong> 박승현 </strong>에 관한 소개<br />
+					<footer>
+						<a href="#one" class="button style2 down">More</a>
+					</footer>
+				</div>
+			</section>
+
+		<!-- One -->
+			<section id="one" class="main style2 right dark fullscreen">
+				<div class="content box style2">
+					<header>
+						<h2>소개</h2>
+					</header>
+					<p>취미: Home Cook<br/>
+                        즐겨하는 요리:<br/>
+                        구운 연어 초밥<br/>
+                        삼겹홍게짬뽕<br/>
+                        된장찌개<br/>
+                        딸기크림치즈 카다페</p>
+				</div>
+				<a href="#two" class="button style2 down anchored">Next</a>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="main style2 left dark fullscreen">
+				<div class="content box style2">
+					<header>
+						<h2>관심있는 분야</h2>
+					</header>
+					<p> 소프트웨어 기획<br/>
+                        핀테크<br/>
+                        금융<br/>
+                        어렸을 적부터 부모님께 금융 관련하여 교육을 많이 받음.</p>
+				</div>
+				<a href="#diary" class="button style2 down anchored">Next</a>
+			</section>
+
+
+		<!-- Diary -->
+			<section id="diary" class="main style3 secondary">
+				<div class="content">
+					<header>
+						<h2>Introduction</h2>
+						<p>Who is 박승현?</p>
+					</header>
+					<div class="box">
+						<div class="fields">
+							<p>
+								이름: 박승현  	,학번: 2017112899	,소속: 글로벌 SW 융합전공 <br/>
+								취미 및 특기: 홈쿡<br/>
+								관심 분야: 금융<br/>
+								IT 관심 분야: 핀테크, 소프트웨어 기획 및 설계<br/>
+								거주지: 대구 수성구 범어동 범어 마크팰리스 오피스텔 3601호<br/>
+								도전 해보고 싶은 분야: 비대면 의료
+							</p>
+						</div>
+					</div>	
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+
+				<!-- Icons -->
+					<ul class="icons">
+						<li><a href="https://www.baemin.com/" class="icon brands fa-baemin"><span class="label">배달<br/>민족</span></a></li>
+						<li><a href="https://www.yogiyo.co.kr/mobile/#/" class="icon brands fa-yogiyo"><span class="label">요기요<br/>배달</span></a></li>
+						<li><a href="https://www.coupangeats.com/" class="icon brands fa-coupang-eats"><span class="label">쿠팡<br/>eats</span></a></li>
+					</ul>
+
+				<!-- Menu -->
+					<ul class="menu">
+						<li>문제 해결과 컴퓨팅</li><li><a>박승현</a></li>
+					</ul>
+
+			</footer>
+
+		<!-- Scripts -->
+			<script src="../static/assets/js/jquery.min.js"></script>
+			<script src="../static/assets/js/jquery.poptrox.min.js"></script>
+			<script src="../static/assets/js/jquery.scrolly.min.js"></script>
+			<script src="../static/assets/js/jquery.scrollex.min.js"></script>
+			<script src="../static/assets/js/browser.min.js"></script>
+			<script src="../static/assets/js/breakpoints.min.js"></script>
+			<script src="../static/assets/js/util.js"></script>
+			<script src="../static/assets/js/main.js"></script>
+			<script src="../static/assets/js/popup.js"></script>
+			<script>
+				$('#resultButton').click(function(){
+					
+					var content = $('#text').val();
+					console.log("clicked")
+					document.getElementById("resultText").innerHTML =  "";
+					_showLoading();
+					document.getElementById("resultImage").src = "";
+					console.log(content)
+					var postdata = {
+						'content':content
+					}
+					$.ajax({
+						type: 'POST',
+						url: '/ajax',
+						data: JSON.stringify(postdata),
+						dataType : 'JSON',
+						headers: {"Content-Type": "application/json"},
+						contentType: "application/json",
+						success: function(data){
+							_showPage();
+							document.getElementById("resultText").innerHTML =  data.result2;
+							console.log(data.linkResult)
+							document.getElementById("resultImage").src = data.linkResult;
+						},
+						error: function(request, status, error){
+							alert('ajax 통신 실패')
+							alert(error);
+						}
+					})
+				})
+			</script>
+			<script>
+				var _showPage = function() {
+					var loader = $("div.loader");
+					loader.css("display","none");
+					var container = $("container");
+					container.css("display","block");
+					var loadingText = $("loadingText");
+					loadingText.css("display", "none");
+				  };
+				  var _showLoading = function() {
+					var loader = $("div.loader");
+					loader.css("display","block");
+					var container = $("container");
+					container.css("display","none");
+					var loadingText = $("loadingText");
+					loadingText.css("display", "block");
+				  };
+
+			</script>
+	</body>
+</html>
